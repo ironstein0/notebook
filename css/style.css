@@ -1,0 +1,40 @@
+* {
+    /*border: solid;
+    border-width: 1px;*/
+    box-sizing: border-box;
+
+}
+
+svg {
+    position: absolute;
+}
+
+.content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.left-column {
+    padding: 10px;
+    text-align: right;
+}
+
+.middle-column {
+    padding: 10px;
+    /*border-radius: 10px;*/
+   /* background-color: rgba(207, 216, 220,.5);*/
+   border-left: double;
+   border-color: #0D47A1;
+}
+
+.right-column {
+    padding: 10px;
+}
+
+.drawing {
+    position: relative;
+}
+
