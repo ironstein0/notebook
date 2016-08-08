@@ -5,30 +5,86 @@
         <!-- javascript -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="../js/vivus/vivus.js"></script>
+        <script src="../js/notebook.js"></script>
         <script src="../js/script.js"></script>
         
         <!-- css -->
         <link rel="stylesheet" href="../css/bootstrap-3.3.7-dist/css/bootstrap.css">
         <link rel="stylesheet" href="../css/style.css">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Homemade+Apple" rel="stylesheet"> -->
+        <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet">
             </head>
     <body>
-        <div class="content container">
-            <div class="row">
-                <div class="col-md-3 left-column column">
-                    <h1>left-column</h1>
-                </div>
-                <div class="col-md-7 middle-column column">
-                    <h1>middle-column</h1>
-                </div>
-                <div class="col-md-2 right-column column">
-                    <h1>right-column</h1>
-                </div>
-            </div>
-        </div>
-        <div class="drawing">
-            <svg width="100" height="100">
-                <circle class="drawing" cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow"/>
-            </svg>
+        <div class="content">
+        
+            <h3>#1.Neural Networks And Deep Learning</h3>
+            <p>This Website is basically a book, regarding <a href = "http://neuralnetworksanddeeplearning.com/index.html"><span id="neural-networks">Neural Networks</span> and deeplearning</a>, written by Michael Nielsen, and consists of a lot of basic material, explained in excruciating detail and clarity. <span data-sidenote="neural-networks">just another sidenote</span>Must be read, because it will give you a feel for the entire subject, as well as a roadmap for studying the subject.</p>
+
+            <p>1) Read only the first three chapters as they contain all the working knowledge required to understand the basics and the applications of neural networks. The next two chapters are a bit technical, and should be read after covering the contents of the first three chapters ingreater detail</p>
+
+            <p>2) Write down working programs for Chapter 1 and chapter 2, as these  two chapters form the crux of the subject, and should be understood completely.</p>
+
+            <p>3) Understanding the Contents of Chapter 1 and 2 is essential, andshould be understood with immense clarity.</p>
+
+            <p>4) Go through the programs in chapter 3 loosely, since this chapterpoints out various downfalls of the previous code, suggests further optimisation algorithms and readings. The contents of this chapter is important from a subjective point of view, since it will provide a roadmap for future study, but the programs should be kept for tackling later.</p>
+
+            <h3>#2.Cauchy-Schwarz Inequality</h3>
+            <p>While going through the chapter 1 of the book Neural Networks and deep learning by Michael Nielsen (link provided in the previous commit), there is a portion where Cauchy-Schwarz inequality is used to prove that using gradient descent algorithm will always decrease the value of the cost function. Here are the links which i referred to for understanding the Cauchy-Schwarz inequality.</p>
+
+            <p>1)<a href = "https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality">wikipedia</a>(this link explains the basic form and gives a short prooffor the Cauchy-Schwarz inequality)<br>
+            2)<a href = "https://www.khanacademy.org/math/linear-algebra/vectors_and_spaces/dot_cross_products/v/proof-of-the-cauchy-schwarz-inequality">Khan academy</a>(this video gives a complete proof of the Cauchy-Schwarz inequality, and explains the use of this theorem)
+
+            <p>After referring to these two links (that is if you aren’t alreadyfamiliar with it), you should try to solve the exercise given in the book, to prove that the gradient descent algorithm always reduces the value of the quadratic cost function by using the Cauchy-Schwarz inequality</p>
+
+            <h3>#3.Neural Network and Learning Machines</h3>
+            <p>I have started studying the subject of neural networks, after going through the book mentioned in the earlier commit, by referring the book - <a href = "http://www.mif.vu.lt/~valdas/DNT/Literatura/Haykin09/Haykin09.pdf">Neural networks and machine Learning (3rd Edition) by Simon Haykin</a> (Though I really advice you that you get a hard copy because you will have to spend a lot of time (and I mean A LOT) with this book)</p>
+
+            <p>This book consists of a lot of subject matter, and I am eventually planning to study this book along with the MIT’s machine learning course 6.867, which covers somewhat similar subject matter (but for now, for the basics, I’ll just stick with Simon Haykin).</p>
+
+            <p>This book is a little tedious, and requires a lot of understanding andsearching a lot of places for complementary material, since a lot of things are considered to be prerequisites and thus only mentioned or explained vaguely.</p>
+
+            <p>So, I will keep posting links, as a supplement material for the portions of the book that I found difficult to understand personally.</p>
+
+            <h3>#4.Demonstration of Perceptron Convergence Theorem</h3>
+            <p>This <a href = "https://www.youtube.com/watch?v=vGwemZhPlsA">youtube video</a> demonstrates the working of basic Perceptron Network, implementing the Perceptron convergence algorithm, to classify a linearly separable dataset into two classes.</p>
+
+            <p>After reading the perceptron convergence theorem in the book Neural Networks and Learning Machines - Simon Haykin, you should clearly understand what is going on in this video, and if not, you should (as I did) watch this video at a slower speed and try to understand what exactly is going on.</p>
+
+            <h3>#5.Bayes Theorem</h3>
+            <p>In the book Neural Networks and Learning Machines (3rd Edition), Pg:55, there is a comparison between a Perceptron classifier and the Bayes Classifier. Not knowing what the Bayes’ classifier was, I tried to look it up online and stumbled upon the Bayes’ theorem.The Bayes Classifier is based on the famous Bayes’ Theorem, put forward by Thomas Bayes. The Bayes’ Theorem intrigued some of my curiosity and hence I started to search for resources that would explain it the best to me.</p>
+
+            <p>The links below give some beautiful explanation (both intuitive and technical) of the Bayes’ theorem, and its implications.
+            <br><a href = "http://www.yudkowsky.net/rational/bayes">intuitive explanation</a>
+            <br><a href = "http://www.yudkowsky.net/rational/technical">technical explaination</a>
+            </p>
+
+            <p>Even though the discussion given in the above links is mostly off topic and has little to do with the Bayes’ classifier, I personally found it very interesting and recommend reading it.</p>
+
+            <p>Also, the website (<a href = "http://www.yudkowsky.net">http://www.yudkowsky.net</a>) contains a lot of other blogs, which are also very interesting and one should give it a try.</p>
+
+            <h3>#6.Interesting Artificial Intelligence Websites</h3>
+            <p>In my earlier commit, I mentioned the site (<a href = "http://www.yudkowsky.net">http://www.yudkowsky.net</a>). This site is basically a blog by Eliezer S. Yudokowsky, a research fellow at the Machine Intelligence Research Institute.</p>
+
+            <p>This redirected me to the Machine Intelligence Research Institute website (<a href = "https://intelligence.org">https://intelligence.org</a>). The contents on this website are quiet interesting, especially the Blog. Also, they have put their papers online, which lay out the theoretical foundation of building aligned artificial intelligence systems.</p>
+
+            <p>Also, through the website mentioned above, i found out another website <a href = "http://lesswrong.com">lesswrong.com</a>.</p>
+
+            <p>This website in a single word, is amazing. The goal of this website being to explore the rationality of the human brain, and relate it in terms of artificial intelligence. The blogs on this website contain a lot of information and insights into a lot of topics related to human brain and artificial intelligence. It is worth bookmarking.</p>
+
+            <h3>#7.Probability</h3>
+            <p>I completed 2 chapters from the book Neural Networks and Learning Machines by Simon Haykin. My realisation was that there was a lot mathematical background required, which I am not familiar with. Hence, I have decided to learn Probability and Linear Algebra, before continuing on to read this book.</p>
+
+            <p>Also, is turns out that MIT’s machine learning course 6.867  (which i briefly talked about in a previous commit that I was going to also complete) requires the following prerequisites :
+            <br><a href = "http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/">MIT’s Probability course 6.041</a>
+            <br><a href = "http://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/">MIT’s linear algebra course 18.06</a></p>
+
+            <p>hence, I am now starting with MIT’s <a href = "probability.html">probability</a> course 6.041 in a new, taking a little detour from the Neural Network subject matter.</p>
+                    
+            <!-- <div class="drawing"> -->
+            <!-- <svg width="100" height="100"> -->
+                <!-- <circle class="drawing" cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow"/> -->
+            <!-- </svg> -->
+            <!-- </div> -->
         </div>
     </body>
 </html>
