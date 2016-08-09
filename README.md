@@ -1,3 +1,3 @@
 # Notebook
 
-A web framework for building websites that resemble a notebook.
+A framework for building websites that resemble a notebook.
