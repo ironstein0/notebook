@@ -31,6 +31,24 @@ Notebook.prototype.init = function() {
         }
     });
 
+    // move sidenotes to left column
+    var content = $('.middle-column').find('*');
+    $.each(content, function(index, value) {
+        var childJqueryObject = content.eq(index);
+        var hasAttribute = function(jqueryObject, attributeName) {
+            var attr = $(jqueryObject).attr(attributeName);
+            if((typeof attr !== typeof undefined) && (attr != false)) {
+                return true;
+            } return false;
+        }
+
+        if(hasAttribute(childJqueryObject, 'data-sidenote')) {
+            var htmlToAppend = childJqueryObject.clone().wrap('<div>').parent().html();
+            $('.left-column').append(htmlToAppend);
+            childJqueryObject.remove();
+        }
+    });
+
     $(window).on('resize', this.positionElements);
     setTimeout(this.positionElements, 1);
 }
@@ -79,23 +97,6 @@ Notebook.prototype.positionElement = function(jqueryObject) {
 
 Notebook.prototype.positionElements = function() {
     
-    // move sidenotes to left column
-    var content = $('.middle-column').find('*');
-    $.each(content, function(index, value) {
-        var childJqueryObject = content.eq(index);
-        var hasAttribute = function(jqueryObject, attributeName) {
-            var attr = $(jqueryObject).attr(attributeName);
-            if((typeof attr !== typeof undefined) && (attr != false)) {
-                return true;
-            } return false;
-        }
-
-        if(hasAttribute(childJqueryObject, 'data-sidenote')) {
-            var htmlToAppend = childJqueryObject.clone().wrap('<div>').parent().html();
-            $('.left-column').append(htmlToAppend);
-            childJqueryObject.remove();
-        }
-    });
     Notebook.prototype.resizeColumns();
 
     // position sidenotes

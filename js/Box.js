@@ -5,14 +5,17 @@ var Box = function(jqueryObject) {
         this.left = offset.left;
         this.bottom = this.top + jqueryObject.outerHeight();
         this.right = this.left + jqueryObject.outerWidth();
+        this.id = jqueryObject.data()['sidenote'];
     }
 }
 
+// copies all the attributes of 'box' to this instance of the Box
 Box.prototype.copy = function(box) {
     this.top = box.top;
     this.left = box.left;
     this.bottom = box.bottom;
     this.right = box.right;
+    this.id = box.id;
 }
 
 // returns true if the point represented by (x,y)
@@ -23,6 +26,9 @@ Box.prototype.isInside = function(x, y) {
     } return false;
 }
 
+// returns an array consisting the downwards displacement 'displacementDown'
+// or the upwards displacement 'displacementUp' required to make the 'box'
+// not overlap this instance of Box
 Box.prototype.avoidOverlap = function(box) {
     assert(box instanceof Box);
     if((box.top >= this.top && box.top < this.bottom) || ((box.bottom <= this.bottom) && (box.bottom > this.top))) {
@@ -34,20 +40,35 @@ Box.prototype.avoidOverlap = function(box) {
     }
 }
 
-Box.prototype.positionBox = function(postionedBoxArray) {
-    // console.log(this);
-    var newBox = new Box();
-    newBox.copy(this);
-    console.log('-----------------------------------')
-    for(var i=0; i<postionedBoxArray.length; i++) {
-        // newBox.copy(this);
-        var displacement = postionedBoxArray[i].avoidOverlap(this);
-        console.log(postionedBoxArray[i]);
-        console.log(this);
-        console.log(displacement);
-        newBox.top += displacement[0];
+// for moving the box around, only use the move*To methods
+// since manually changing one attribute of the box does not
+// change other attributes. For example, changin the 'top'
+// attribute of the box does not automatically change the 'bottom'
+// of the box, which is the expected behaviour most of the times
+Box.prototype.moveTopTo = function(top){
+    var displacement = top - this.top;
+    this.top = top;
+    this.bottom += displacement;
+}
+
+Box.prototype.moveLeftTo = function(left) {
+    var displacement = left - this.left;
+    this.left = left;
+    this.right += displacement;
+}
+
+Box.prototype.positionBox = function(positionedBoxArray) {
+    
+    for(var i=0; i<positionedBoxArray.length; i++) {
+        // console.log(this.toString());
+        // console.log(positionedBoxArray[i].toString());
+        var displacement = positionedBoxArray[i].avoidOverlap(this);
+        // console.log(displacement);
+        if(displacement[0] != 0) {
+            // console.log('displacing ' + this.id + ' to the bottom of ' + positionedBoxArray[i].id);
+            this.moveTopTo(positionedBoxArray[i].bottom);
+        }
     }
-    this.copy(newBox);
 }
 
 Box.prototype.toString = function() {
@@ -55,4 +76,5 @@ Box.prototype.toString = function() {
     returnString += 'bottom : ' + this.bottom + '; ';
     returnString += 'left : ' + this.left + '; ';
     returnString += 'right : ' + this.right + '; ';
+    return returnString;
 }
