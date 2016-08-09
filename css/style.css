@@ -1,6 +1,6 @@
 * {
-    border: solid;
-    border-width: 1px;
+    /*border: solid;
+    border-width: 1px;*/
     box-sizing: border-box;
     background-color: #fcfae8;
 }
@@ -19,7 +19,7 @@ svg {
 
 .left-column {
     padding: 10px;
-    /*text-align: right;*/
+    text-align: center;
     font-family: 'Reenie Beanie', cursive;
     font-size: 25px;
     color: #0D47A1;
