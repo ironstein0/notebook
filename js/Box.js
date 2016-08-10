@@ -1,8 +1,29 @@
 var Box = function(jqueryObject) {
     if(jqueryObject != undefined) {
         var offset = jqueryObject.offset();
-        this.top = offset.top;
-        this.left = offset.left;
+        var unknownOffset = -8;
+        this.top = offset.top + unknownOffset;
+        this.left = offset.left + unknownOffset;
+
+        // source http://javascript.info/tutorial/coordinates
+        // var boundingRectangle = jqueryObject.get(0).getBoundingClientRect();
+
+        var body = document.body;
+        var docElem = document.documentElement;
+        
+        // // calculate page scroll
+        // var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+        // var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+
+        // // the document (html or body) can be shifted from left upper corner in 
+        // // internet explorer. get the shift
+        var clientTop = docElem.clientTop || body.clientTop || 0;
+        var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+
+        // // add scrolls to window-relative coordinates and subtract shift to get
+        // // the cordinates of the element in the whole document
+        // this.top = boundingRectangle.top + scrollTop - clientTop;
+        // this.left = boundingRectangle.left + scrollLeft - clientLeft;
         this.bottom = this.top + jqueryObject.outerHeight();
         this.right = this.left + jqueryObject.outerWidth();
         this.id = jqueryObject.data()['sidenote'];
@@ -40,9 +61,9 @@ Box.prototype.avoidOverlap = function(box) {
     }
 }
 
-// for moving the box around, only use the move*To methods
-// since manually changing one attribute of the box does not
-// change other attributes. For example, changin the 'top'
+// for moving the box around, only use the moveTopTo or moveLeftTo 
+// methods since manually changing one attribute of the box does not
+// change other attributes. For example, changing the 'top'
 // attribute of the box does not automatically change the 'bottom'
 // of the box, which is the expected behaviour most of the times
 Box.prototype.moveTopTo = function(top){

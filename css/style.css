@@ -1,15 +1,22 @@
 * {
-    border: solid;
-    border-width: 1px;
+    /*border: solid;
+    border-width: 1px;*/
     box-sizing: border-box;
-    background-color: #fcfae8;
+    /*background-color: #fff6d7;*/ /* without bluelight filtering */
+    background-color: #fffef5;
+    line-height: 22px;
 }
 
 svg {
     position: absolute;
+    z-index: 1;
 }
 
-.content {
+path {
+    z-index: 2;
+}
+
+#content {
     position: absolute;
     left: 0;
     right: 0;
@@ -39,6 +46,10 @@ svg {
 .right-column {
     padding: 10px;
     float: left;
+}
+
+#drawing {
+    position: relative;
 }
 
 .drawing {

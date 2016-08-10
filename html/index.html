@@ -18,7 +18,9 @@
         <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet">
             </head>
     <body>
-        <div class="content">
+        <!-- all content that is supposed to be written in the body is now 
+             written inside a tag with id "content" -->
+        <div id="content">
         
             <h3>#1.Neural Networks And Deep Learning</h3>
             <p>This Website is basically a book, regarding <a href = "http://neuralnetworksanddeeplearning.com/index.html"><span id="neural-networks">Neural Networks</span> and deeplearning</a>, written by Michael Nielsen, and consists of a lot of basic material, explained in excruciating detail and clarity. <span data-sidenote="neural-networks">just another sidenote hello world hmmm what the hell is happening ~ its working wowo wlksdjflsdkj
@@ -27,7 +29,7 @@
             Read only the first three chapters as they contain all the working knowledge required to understand the basics and the applications of neural networks. The next two chapters are a bit technical, and should be read after covering the contents of the first three chapters ingreater detail ####
             </span>Must be read, because it will give you a feel for the entire subject, as well as a roadmap for studying the subject.</p>
 
-            <p id="paragraph">1) <span data-sidenote="paragraph">SIDENOTE TIME ALSKDJFDSLK</span>Read only the first three chapters as they contain all the working knowledge required to understand the basics and the applications of neural networks. The next two chapters are a bit technical, and should be read after covering the contents of the first three chapters ingreater detail</p>
+            <p id="paragraph">1) <span data-sidenote="paragraph">SIDENOTE TIME ALSKDJFDSLK</span>Read only<span> the first three chapters as they contain all the working knowledge</span> required to understand the basics and the applications of neural networks. The next two chapters are a bit technical, and should be read after covering the contents of the first three chapters ingreater detail</p>
 
             <p>2) Write down working programs for Chapter 1 and chapter 2, as these  two chapters form the crux of the subject, and should be understood completely.</p>
 
@@ -87,11 +89,19 @@
 
             <p>hence, I am now starting with MIT’s <a href = "probability.html">probability</a> course 6.041 in a new, taking a little detour from the Neural Network subject matter.</p>
                     
-            <!-- <div class="drawing"> -->
-            <!-- <svg width="100" height="100"> -->
-                <!-- <circle class="drawing" cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow"/> -->
-            <!-- </svg> -->
-            <!-- </div> -->
+            
+        </div>
+        <div id="drawing">
+            <svg width="100" height="100">
+                <circle class="drawing" cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" style="z-index:10"/>
+                <path d="M 249.25 526.15625 L 413.25 526.15625" stroke="black" fill="transparent"></path>
+            </svg>
+        </div>
+        <div class="drawing">
+            <svg width="100" height="100">
+                <circle class="drawing" cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow"/>
+                <path d="M 249.25 526.15625 L 413.25 526.15625" stroke="black" fill="transparent"></path>
+            </svg>
         </div>
     </body>
 </html>
