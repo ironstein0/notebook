@@ -126,10 +126,6 @@ Notebook.prototype.positionElements = function() {
 
 Notebook.prototype.underline = function(jqueryObject) {
     // checkout solution at http://stackoverflow.com/questions/15960653/obtain-a-line-of-a-paragraph-in-html
-    // jqueryObject.css('background-color', 'blue');
-    // $.each(jqueryObject.find('*'), function() {
-    //     $(this).css('background-color', 'blue');
-    // });
 
     var spanify = function(jqueryObject) {
         var textArray = jqueryObject.text().split(' ');
@@ -143,14 +139,8 @@ Notebook.prototype.underline = function(jqueryObject) {
         jqueryObject.html(newHtml);
     };
 
-    var printHtml = function(jqueryObject) {
-        console.log($('<div>').append(jqueryObject.clone()).html());
-    };
-
-    printHtml(jqueryObject);
     var originalHtml = jqueryObject.html();
     spanify(jqueryObject);
-    printHtml(jqueryObject);
 
     var lineArray = [[]];
     var lastBox = new Box();
@@ -171,56 +161,67 @@ Notebook.prototype.underline = function(jqueryObject) {
     console.log('lineArray !');
     console.log(lineArray);
 
+    // draw actual svg path elements on the screen for all lines
     for(var i=0; i<lineArray.length; i++) {
-        console.log('---------------');
         var firstBox = lineArray[i][0];
         var lastBox = lineArray[i][lineArray[i].length - 1];
-        console.log(firstBox);
-        console.log(lastBox);
-        console.log(lineArray[i]);
-        console.log(lineArray[i].length);
-        console.log('---------------');
-        var svgWidth = lastBox.right - firstBox.left;
-        // var svgWidth = 100;
-        // var svgHeight = lineArray[i][0].bottom - lineArray[i][0].top;
-        var svgHeight = '100';
-        // var svgText = '<svg width="' + svgWidth + '" height="' + svgHeight + '"></svg>';
-        // var svgText = '<svg></svg>'
-        // console.log(svgText);
-        // var pathText = '<path d="M ' + firstBox.left + ' ' + firstBox.bottom + ' L ' + lastBox.right + ' ' + lastBox.bottom + '" ';
-        // pathText += 'fill="transparent" stroke="black" stroke-width="4"/>';
-        var pathPath = 'M' + firstBox.left + ' ' + firstBox.bottom + ' L' + lastBox.right + ' ' + lastBox.bottom;
-        // console.log(pathText);
-        // var svg = $(svgText);
-        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        svg.setAttribute('width', svgWidth);
-        svg.setAttribute('height', svgHeight);
-        svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-        path.setAttribute('stroke', 'red');
-        path.setAttribute('stroke-width', '4px');
-        path.setAttribute('fill', 'black');
-        path.setAttribute('d', pathPath);
-        svg.appendChild(path);
-        // $(path).attr('d', pathPath);
-        // console.log('path : ' + svg);
-        // path = $(pathText);
-        // $(path).css('stroke', 'red');
-        // $(path).css('fill', 'transparent');
-        // $(path).css('stroke-width', "4px");
-        // $(path).css('visibility', 'visible');
-        // $(svg).html(pathText);
-        document.getElementById('drawing').appendChild(svg);
-        $('#drawing').html($('#drawing').html());
-        // $("body").html($("body").html());
-        // printHtml($(svg));
-        // $('#drawing').append(svg);
-        // $('.drawing').append(svg);
-        console.log('hmmm');
+        Notebook.prototype.drawLine(firstBox.left, firstBox.bottom, lastBox.right, lastBox.bottom);
     }
 
     // convert element to original non spanned version
     jqueryObject.html(originalHtml);
+};
+
+Notebook.prototype.drawLine = function(x1, y1, x2, y2) {
+    var pathStrokeWidth = 6;
+    
+    // calculate with, height, top and left of svg element required
+    if(x1 < x2) {
+        var svgLeft = x1;
+        var svgWidth = x2 - x1;
+    } else {
+        var svgLeft = x2;
+        var svgWidth = x1 - x2;
+    }
+
+    if(y1 < y2) {
+        var svgTop = y1;
+        var svgHeight = y2 - y1;
+    } else {
+        var svgTop = y2;
+        var svgHeight = y1 - y2;
+    }
+
+    // if height is less than pathStrokeWidth, then set it equal to pathStrokeWidth
+    svgHeight = (svgHeight >= pathStrokeWidth) || pathStrokeWidth;
+
+    // create svg
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', svgWidth);
+    svg.setAttribute('height', svgHeight);
+    svg.style.top =  svgTop;
+    svg.style.left = svgLeft;
+
+    // calculate x1, y1, x2, y2 relative to the svg element
+    var x1_rel = x1 - svgLeft;
+    var x2_rel = x2 - svgLeft;
+    var y1_rel = y1 - svgTop;
+    var y2_rel = y2 - svgTop;
+    var pathPath = 'M ' + x1_rel + ' ' + y1_rel + ' L ' + x2_rel + ' ' + y2_rel;
+    
+    // create path
+    var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('stroke', 'red');
+    path.setAttribute('stroke-width', pathStrokeWidth + 'px');
+    path.setAttribute('fill', 'transparent');
+    path.setAttribute('d', pathPath);
+    svg.appendChild(path);
+
+    // append path to svg 
+    svg.appendChild(path);
+
+    // add svg to document
+    document.getElementById('drawing').appendChild(svg);
 };
 
 Notebook.prototype.draw = function() {
