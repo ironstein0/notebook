@@ -15,9 +15,8 @@ var Notebook = function() {
     // three column layout
     $LAB.setGlobalDefaults({AlwaysPreserveOrder: true});
     $LAB
-    .script('../js/utils.js')
-    .script('../js/Box.js')
-    .script('../js/Notebook.js').wait(function() {
+    .script('../Notebook/utils.js')
+    .script('../Notebook/Box.js').wait(function() {
         console.log('all scripts loaded');
         $('#content').css('visibility', 'initial');
         Notebook.prototype.init();
@@ -34,10 +33,12 @@ var Notebook = function() {
             loading: function() {console.log('loading');},
             active: function() {
                 console.log('rendering complete');
+
+                // start animation
                 $LAB
                 .script('https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js')
-                .script('../js/vivus/pathformer.js')
-                .script('../js/vivus/vivus.js').wait(function() {
+                .script('../Notebook/vivus/pathformer.js')
+                .script('../Notebook/vivus/vivus.js').wait(function() {
                     Notebook.prototype.draw();
                     initDoneFlag = true;
                 });
