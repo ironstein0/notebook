@@ -12,10 +12,6 @@ svg {
     z-index: 1;
 }
 
-path {
-    z-index: 2;
-}
-
 #content {
     position: absolute;
     left: 0;

@@ -2,8 +2,8 @@
 
 (function (window, document) {
 
-  //import("pathformer.js");
-  //import("vivus.js");
+  // import("pathformer.js");
+  // import("vivus.js");
 
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
