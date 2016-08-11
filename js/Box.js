@@ -1,15 +1,15 @@
 var Box = function(jqueryObject) {
     if(jqueryObject != undefined) {
-        var offset = jqueryObject.offset();
-        var unknownOffset = -8;
-        this.top = offset.top + unknownOffset;
-        this.left = offset.left + unknownOffset;
-
+        
+        ///////////////////////////////////////////////////////
+        // HOW Jquery's OFFSET METHOD WORKS
         // source http://javascript.info/tutorial/coordinates
+        ///////////////////////////////////////////////////////
+
         // var boundingRectangle = jqueryObject.get(0).getBoundingClientRect();
 
-        var body = document.body;
-        var docElem = document.documentElement;
+        // var body = document.body;
+        // var docElem = document.documentElement;
         
         // // calculate page scroll
         // var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
@@ -17,13 +17,18 @@ var Box = function(jqueryObject) {
 
         // // the document (html or body) can be shifted from left upper corner in 
         // // internet explorer. get the shift
-        var clientTop = docElem.clientTop || body.clientTop || 0;
-        var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+        // var clientTop = docElem.clientTop || body.clientTop || 0;
+        // var clientLeft = docElem.clientLeft || body.clientLeft || 0;
 
         // // add scrolls to window-relative coordinates and subtract shift to get
         // // the cordinates of the element in the whole document
         // this.top = boundingRectangle.top + scrollTop - clientTop;
         // this.left = boundingRectangle.left + scrollLeft - clientLeft;
+        
+        var offset = jqueryObject.offset();
+        var unknownOffset = -9;
+        this.top = offset.top + unknownOffset;
+        this.left = offset.left + unknownOffset;
         this.bottom = this.top + jqueryObject.outerHeight();
         this.right = this.left + jqueryObject.outerWidth();
         this.id = jqueryObject.data()['sidenote'];
