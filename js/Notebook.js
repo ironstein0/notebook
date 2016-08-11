@@ -1,6 +1,5 @@
 var Notebook = function() {
     this.init();
-    this.positionElements();
     this.draw();
 };
 
@@ -50,9 +49,9 @@ Notebook.prototype.init = function() {
             childJqueryObject.remove();
         }
     });
-
+    this.positionElements();
     $(window).on('resize', this.positionElements);
-    setTimeout(this.positionElements, 10);
+    setTimeout(this.positionElements, 20);
 }
 
 Notebook.prototype.resizeColumns = function() {
@@ -93,7 +92,6 @@ Notebook.prototype.positionElement = function(jqueryObject) {
             left: objectBox.left
         });
         jqueryObject.css('width', '100%');
-        jqueryObject.css('padding-left', '2px');
     }
 };
 
@@ -107,16 +105,16 @@ Notebook.prototype.positionElements = function() {
     $.each(content, function(index, value) {
         Notebook.prototype.positionElement(content.eq(index));
     });
-
-    // underline notes corresponding to sidenotes
+    
     var content = $('.left-column').find('*');
     content.push.apply($('.right-column').find('*'));
 
     // remove all previous underlines
-    $.each($('.drawing').children('*'), function(index, value) {
+    $.each($('#drawing').children('svg'), function(index, value) {
         $(this).remove();
     });
 
+    // underline notes corresponding to sidenotes
     for(var i=0; i<content.length; i++) {
         var referencedElement = $('#' + content.eq(i).data()['sidenote']);
         assert(referencedElement != undefined);
@@ -149,7 +147,6 @@ Notebook.prototype.underline = function(jqueryObject) {
     lastBox.bottom = 0;
     lastBox.right = 0;
     $.each(jqueryObject.find('span'), function(index, value) {
-        console.log(value);
         box = new Box($(this));
         if(box.right < lastBox.right) {
             // new line started
@@ -158,8 +155,6 @@ Notebook.prototype.underline = function(jqueryObject) {
         lineArray[lineArray.length - 1].push(box);
         lastBox = box;
     });
-    console.log('lineArray !');
-    console.log(lineArray);
 
     // draw actual svg path elements on the screen for all lines
     for(var i=0; i<lineArray.length; i++) {
@@ -208,7 +203,7 @@ Notebook.prototype.drawLine = function(x1, y1, x2, y2) {
     var y1_rel = y1 - svgTop;
     var y2_rel = y2 - svgTop;
     var pathPath = 'M ' + x1_rel + ' ' + y1_rel + ' L ' + x2_rel + ' ' + y2_rel;
-    
+
     // create path
     var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('stroke', 'red');

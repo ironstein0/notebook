@@ -80,14 +80,19 @@ Box.prototype.moveLeftTo = function(left) {
 
 Box.prototype.positionBox = function(positionedBoxArray) {
     
-    for(var i=0; i<positionedBoxArray.length; i++) {
-        // console.log(this.toString());
-        // console.log(positionedBoxArray[i].toString());
-        var displacement = positionedBoxArray[i].avoidOverlap(this);
-        // console.log(displacement);
-        if(displacement[0] != 0) {
-            // console.log('displacing ' + this.id + ' to the bottom of ' + positionedBoxArray[i].id);
-            this.moveTopTo(positionedBoxArray[i].bottom);
+    // for(var i=0; i<positionedBoxArray.length; i++) {
+    //     // console.log(this.toString());
+    //     // console.log(positionedBoxArray[i].toString());
+    //     var displacement = positionedBoxArray[i].avoidOverlap(this);
+    //     // console.log(displacement);
+    //     if(displacement[0] != 0) {
+    //         // console.log('displacing ' + this.id + ' to the bottom of ' + positionedBoxArray[i].id);
+    //         this.moveTopTo(positionedBoxArray[i].bottom);
+    //     }
+    // }
+    if(positionedBoxArray.length != 0) {
+        if(this.top < positionedBoxArray[positionedBoxArray.length - 1].bottom) {
+            this.moveTopTo(positionedBoxArray[positionedBoxArray.length - 1].bottom);
         }
     }
 }
