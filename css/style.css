@@ -45,6 +45,10 @@ path {
 
 .right-column {
     padding: 10px;
+    text-align: left;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 25px;
+    color: #0D47A1;
     float: left;
 }
 

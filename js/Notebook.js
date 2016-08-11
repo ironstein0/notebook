@@ -17,6 +17,7 @@ Notebook.prototype.init = function() {
     $('.row').append('<div class="col-md-7 middle-column column"></div>')
     $('.row').append('<div class="col-md-2 right-column column"></div>');
     $('.left-column').css('position', 'relative');
+    $('.right-column').css('position', 'relative');
 
     $('body').append('<div id="drawing"></div>');
 
@@ -71,10 +72,10 @@ Notebook.prototype.resizeColumns = function() {
     if(rightColumn != undefined) {
         $('.right-column').height($('.middle-column').height());
     }
-
 };
 
-var positionedElementsArray = [];
+var leftColumnPositionedElementsArray = [];
+var rightColumnPositionedElementsArray = [];
 Notebook.prototype.positionElement = function(jqueryObject) {
     var referencePointer = jqueryObject.data()['sidenote'];
     var referencedElement = $('#' + referencePointer);
@@ -90,9 +91,16 @@ Notebook.prototype.positionElement = function(jqueryObject) {
         var objectBox = new Box(jqueryObject);
 
         // position the box
-        objectBox.positionBox(positionedElementsArray);
-        positionedElementsArray.push(objectBox);
-
+        var position = objectBox.positionBox(leftColumnPositionedElementsArray, rightColumnPositionedElementsArray, referencedElement);
+        if(position == 'left') {
+            leftColumnPositionedElementsArray.push(objectBox);
+        } else if(position == 'right') {
+            rightColumnPositionedElementsArray.push(objectBox);
+            jqueryObject = jqueryObject.appendTo('.right-column');
+        } else {
+            // pass 
+        }
+        
         // change the position of this element to match that of 
         // the objectBox
         jqueryObject.offset({
@@ -108,26 +116,34 @@ Notebook.prototype.positionElements = function() {
     Notebook.prototype.resizeColumns();
 
     // position sidenotes
-    positionedElementsArray = [];
-    var content = $('.left-column').find('*');
-    $.each(content, function(index, value) {
-        Notebook.prototype.positionElement(content.eq(index));
+    leftColumnPositionedElementsArray = [];
+    rightColumnPositionedElementsArray = [];
+    $('.left-column').find('*').each(function() {
+        Notebook.prototype.positionElement($(this));
     });
-    
-    var content = $('.left-column').find('*');
-    content.push.apply($('.right-column').find('*'));
+    $('.right-column').find('*').each(function() {
+        Notebook.prototype.positionElement($(this));
+    })
 
-    // remove all previous underlines
-    $.each($('#drawing').children('svg'), function(index, value) {
+    // remove previous underlines 
+    $('#drawing').children('*').each(function() {
         $(this).remove();
     });
 
-    // underline notes corresponding to sidenotes
-    for(var i=0; i<content.length; i++) {
-        var referencedElement = $('#' + content.eq(i).data()['sidenote']);
+    // generate new underlines
+
+    $('.left-column').find('*').each(function() {
+        var referencedElement = $('#' + $(this).data()['sidenote']);
         assert(referencedElement != undefined);
         Notebook.prototype.underline(referencedElement);
-    }
+    });
+
+    $('.right-column').find('*').each(function() {
+        var referencedElement = $('#' + $(this).data()['sidenote']);
+        assert(referencedElement != undefined);
+        Notebook.prototype.underline(referencedElement);
+    });
+    
 };
 
 Notebook.prototype.underline = function(jqueryObject) {

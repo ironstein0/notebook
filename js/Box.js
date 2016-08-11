@@ -78,23 +78,37 @@ Box.prototype.moveLeftTo = function(left) {
     this.right += displacement;
 }
 
-Box.prototype.positionBox = function(positionedBoxArray) {
+Box.prototype.positionBox = function(leftColumnPositionedBoxArray, rightColumnPositionedBoxArray, referencedElement) {
     
-    // for(var i=0; i<positionedBoxArray.length; i++) {
-    //     // console.log(this.toString());
-    //     // console.log(positionedBoxArray[i].toString());
-    //     var displacement = positionedBoxArray[i].avoidOverlap(this);
-    //     // console.log(displacement);
-    //     if(displacement[0] != 0) {
-    //         // console.log('displacing ' + this.id + ' to the bottom of ' + positionedBoxArray[i].id);
-    //         this.moveTopTo(positionedBoxArray[i].bottom);
-    //     }
-    // }
-    if(positionedBoxArray.length != 0) {
-        if(this.top < positionedBoxArray[positionedBoxArray.length - 1].bottom) {
-            this.moveTopTo(positionedBoxArray[positionedBoxArray.length - 1].bottom);
+    var maxDisplacementFromParentNote = 100;
+
+    var referencedElementBox = new Box(referencedElement);
+    var newBox = new Box();
+    newBox.copy(this);
+
+    // position in the left column
+    if(leftColumnPositionedBoxArray.length != 0) {
+        if(newBox.top < leftColumnPositionedBoxArray[leftColumnPositionedBoxArray.length - 1].bottom) {
+            newBox.moveTopTo(leftColumnPositionedBoxArray[leftColumnPositionedBoxArray.length - 1].bottom);
         }
     }
+
+    if((newBox.top - referencedElementBox.bottom) > maxDisplacementFromParentNote) {
+        // position in the right column 
+        newBox.copy(this);
+        if(rightColumnPositionedBoxArray.length != 0) {
+            if(newBox.top < rightColumnPositionedBoxArray[rightColumnPositionedBoxArray.length - 1].bottom) {
+                newBox.moveTopTo(rightColumnPositionedBoxArray[rightColumnPositionedBoxArray.length - 1].bottom);
+            }
+        }
+        newBox.left = newBox.left + (new Box($('.right-column'))).left;
+        this.copy(newBox);
+        return 'right'
+    }
+
+    // keep in the left column
+    this.copy(newBox);
+    return 'left';
 }
 
 Box.prototype.toString = function() {
