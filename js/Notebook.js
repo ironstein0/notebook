@@ -20,39 +20,47 @@ Notebook.prototype.init = function() {
 
     $('body').append('<div id="drawing"></div>');
 
-    // move all content to middle column
+    // move all content to respective columns 
     var content = $('#content').children();
     $.each(content, function(index, value) {
         var childJqueryObject = content.eq(index);
         if(! childJqueryObject.hasClass('row')) {
-            var children = childJqueryObject.find();
-            var htmlToAppend = childJqueryObject.clone().wrap('<div>').parent().html();
-            $('.middle-column').append(htmlToAppend);
+            if(! Notebook.prototype.assignColumns(childJqueryObject)) {
+                childJqueryObject.find('*').each(function(index, value) {
+                    Notebook.prototype.assignColumns($(this));
+                });
+                var htmlToAppend = childJqueryObject.clone().wrap('<div>').parent().html();
+                $('.middle-column').append(htmlToAppend);
+            }
             childJqueryObject.remove();
         }
     });
 
-    // move sidenotes to left column
-    var content = $('.middle-column').find('*');
-    $.each(content, function(index, value) {
-        var childJqueryObject = content.eq(index);
-        var hasAttribute = function(jqueryObject, attributeName) {
-            var attr = $(jqueryObject).attr(attributeName);
-            if((typeof attr !== typeof undefined) && (attr != false)) {
-                return true;
-            } return false;
-        }
-
-        if(hasAttribute(childJqueryObject, 'data-sidenote')) {
-            var htmlToAppend = childJqueryObject.clone().wrap('<div>').parent().html();
-            $('.left-column').append(htmlToAppend);
-            childJqueryObject.remove();
-        }
-    });
     this.positionElements();
     $(window).on('resize', this.positionElements);
     setTimeout(this.positionElements, 20);
 }
+
+// returns true if the jqueryObject was assigned in a column other than the 
+// middle column, else returns false
+Notebook.prototype.assignColumns = function(jqueryObject) {
+    
+    var hasAttribute = function(jqueryObject, attributeName) {
+        var attr = $(jqueryObject).attr(attributeName);
+        if((typeof attr !== typeof undefined) && (attr != false)) {
+            return true;
+        } return false;
+    };
+    
+    if(hasAttribute(jqueryObject, 'data-sidenote')) {
+        // sidenote
+        var htmlToAppend = jqueryObject.clone().wrap('<div>').parent().html();
+        var appendedObject = $(htmlToAppend).appendTo($('.left-column'));
+        jqueryObject.remove();
+        return true;
+    } 
+    return false;
+};
 
 Notebook.prototype.resizeColumns = function() {
     var leftColumn = $('.left-column');
