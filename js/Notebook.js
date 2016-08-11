@@ -6,8 +6,12 @@
 
 var Notebook = function() {
     
+    // avoid from content to be displayed in normal style 
+    // (without three column layout). It looks ugly that way
     $('#content').css('visibility', 'hidden');
-    // load scripts linearly
+
+    // first load only the scripts required to generate the
+    // three column layout
     $LAB.setGlobalDefaults({AlwaysPreserveOrder: true});
     $LAB
     .script('../js/utils.js')
@@ -18,9 +22,11 @@ var Notebook = function() {
         Notebook.prototype.init();
         Notebook.prototype.draw();
 
+        // load scripts required for animation
         $LAB
         .script('../js/vivus/pathformer.js')
         .script('../js/vivus/vivus.js').wait(function() {
+            animationFlag = true;
             Notebook.prototype.animate();
         });
 
@@ -82,6 +88,8 @@ Notebook.prototype.animate = function() {
                 start: 'inViewport'
             });
         });
+
+        animationFlag = false;
     }, 1000);
 }
 
@@ -155,6 +163,7 @@ Notebook.prototype.positionElement = function(jqueryObject) {
     }
 };
 
+var animationFlag = 0;
 Notebook.prototype.positionElements = function() {
     
     Notebook.prototype.resizeColumns();
@@ -188,6 +197,18 @@ Notebook.prototype.positionElements = function() {
         assert(referencedElement != undefined);
         Notebook.prototype.underline(referencedElement);
     });
+
+    try {
+        // check if vivus has been loaded
+        var temp = Vivus.EASE_OUT;
+        if(animationFlag == false) {
+            Notebook.prototype.animate();
+            animationFlag = true;
+        }
+
+    } catch(err) {
+        // pass
+    }
     
 };
 
