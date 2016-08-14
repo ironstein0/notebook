@@ -8,12 +8,19 @@
 var middleColumnFont = 'Muli';
 var leftColumnFont = 'Reenie Beanie'
 var initDoneFlag = false; // flag representing Notebook initialization status
+var callbackFunction;
+
+var initDoneFlagSetter = function(initDone) {
+    initDoneFlag = initDone;
+    callbackFunction();
+};
 
 /*
  * constructor
  *************************
  */
-var Notebook = function() {
+var Notebook = function(callback) {
+    callbackFunction = callback;
 
     // get location of folder containing Notebook.js
     var jsFileLocation = ''
@@ -42,7 +49,7 @@ var Notebook = function() {
     // three column layout, and position elements
     $LAB.setGlobalDefaults({AlwaysPreserveOrder: true});
     $LAB
-    .script(folderLocation + 'utils.js')
+    .script(folderLocation + 'Utils.js')
     .script(folderLocation + 'Box.js').wait(function() {
         console.log('all scripts loaded');
         Notebook.prototype.init();
@@ -67,7 +74,7 @@ var Notebook = function() {
                 .script(folderLocation + 'vivus/pathformer.js')
                 .script(folderLocation + 'vivus/vivus.js').wait(function() {
                     Notebook.prototype.draw();
-                    initDoneFlag = true;
+                    initDoneFlagSetter(true);
                 });
             },
 
@@ -142,7 +149,7 @@ Notebook.prototype.init = function() {
 
     // doing this solves the (first time sidenotes incorrectly displayed) problem
     setTimeout(this.positionElements, 20);
-    
+
 }
 
 Notebook.prototype.animate = function() {
@@ -152,7 +159,6 @@ Notebook.prototype.animate = function() {
         $('path').each(function() {
             $(this).css('visibility', 'initial');
         });
-
         // create new vivus objects for each svg element
         $('#drawing').children().each(function() {
             new Vivus($(this).attr('id'), {
@@ -238,7 +244,7 @@ Notebook.prototype.positionElement = function(jqueryObject) {
 
 var animationFlag = 0;
 Notebook.prototype.positionElements = function() {
-    
+
     Notebook.prototype.resizeColumns();
 
     // position sidenotes
@@ -257,6 +263,7 @@ Notebook.prototype.positionElements = function() {
 };
 
 Notebook.prototype.draw = function() {
+
     // remove previous underlines 
     idCount = 0;
     $('#drawing').children('*').each(function() {
