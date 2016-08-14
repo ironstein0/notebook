@@ -316,7 +316,7 @@ Notebook.prototype.underline = function(jqueryObject) {
     spanify(jqueryObject);
 
     var lineArray = [[]];
-    var lastBox = new Box();
+    var lastBox = new Box($('<div></div>'));
     lastBox.left = 0;
     lastBox.top = 0;
     lastBox.bottom = 0;

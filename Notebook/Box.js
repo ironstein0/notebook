@@ -1,5 +1,5 @@
 var Box = function(jqueryObject) {
-    if(jqueryObject != undefined) {
+    if(jqueryObject instanceof $) {
         
         ///////////////////////////////////////////////////////
         // HOW Jquery's OFFSET METHOD WORKS
@@ -32,7 +32,10 @@ var Box = function(jqueryObject) {
         this.bottom = this.top + jqueryObject.outerHeight();
         this.right = this.left + jqueryObject.outerWidth();
         this.id = jqueryObject.data()['sidenote'];
+    } else {
+        throw new TypeError('CreationError');
     }
+
 }
 
 // copies all the attributes of 'box' to this instance of the Box

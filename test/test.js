@@ -19,18 +19,23 @@ $(window).load(function () {
     console.log(folderLocation);
 
     var callback = function() {
-        $LAB.setGlobalDefaults({AlwaysPreserveOrder: true});
-        $LAB
-        .script(folderLocation + '/jasmine/jasmine-2.4.1/jasmine.js')
-        .script(folderLocation + 'jasmine/jasmine-2.4.1/jasmine-html.js')
-        .script(folderLocation + 'jasmine/jasmine-2.4.1/boot.js')
-        .script(folderLocation + '../Notebook/Box.js')
-        .script(folderLocation + '../Notebook/Notebook.js')
-        .script(folderLocation + '../Notebook/Utils.js')
-        .script(folderLocation + 'jasmine/spec/BoxSpec.js')
-        .script(folderLocation + 'jasmine/spec/NotebookSpec.js')
-        .script(folderLocation + 'jasmine/spec/UtilsSpec.js')
-    }
+        // // console.log(JSON.stringify(window));
+        // localStorage.setItem('html', JSON.stringify($('body').get(0)));
+        // console.log(localStorage.getItem('html'));
+        // a=b;
+        // window.location.href = 'jasmine/SpecRunner.html';
+        // // $LAB.setGlobalDefaults({AlwaysPreserveOrder: true});
+        // // $LAB
+        // // .script(folderLocation + 'jasmine/jasmine-2.4.1/jasmine.js')
+        // // .script(folderLocation + 'jasmine/jasmine-2.4.1/jasmine-html.js')
+        // // .script(folderLocation + 'jasmine/jasmine-2.4.1/boot.js')
+        // // .script(folderLocation + '../Notebook/Box.js')
+        // // .script(folderLocation + '../Notebook/Notebook.js')
+        // // .script(folderLocation + '../Notebook/Utils.js')
+        // // .script(folderLocation + 'jasmine/spec/BoxSpec.js')
+        // // .script(folderLocation + 'jasmine/spec/NotebookSpec.js')
+        // // .script(folderLocation + 'jasmine/spec/UtilsSpec.js')
+    };
 
     var nb = new Notebook(callback);
 });
