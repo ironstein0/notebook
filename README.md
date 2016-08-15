@@ -19,11 +19,13 @@ demo available here : [https://riyanshkarani011235.github.io/pages/notebook/note
             ...
         </body>
         
-3) in your javascript when everything else is initialized, just run `new Notebook();`. So, somehting like :
+3) in your javascript, just run `new Notebook(callback);` and the callback function will be run after everything is initialized. So, somehting like :
 
     $(window).load(function() {
-        // all your javascript goes here
-        new Notebook();
+        var callback = function() {
+            // all your javascript goes here
+        }
+        new Notebook(callback);
     }
 
 **Thats it**
