@@ -316,11 +316,7 @@ Notebook.prototype.underline = function(jqueryObject) {
     spanify(jqueryObject);
 
     var lineArray = [[]];
-    var lastBox = new Box($('<div></div>'));
-    lastBox.left = 0;
-    lastBox.top = 0;
-    lastBox.bottom = 0;
-    lastBox.right = 0;
+    var lastBox = new Box();
     $.each(jqueryObject.find('span'), function(index, value) {
         box = new Box($(this));
         if(box.right < lastBox.right) {
