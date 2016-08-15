@@ -8,6 +8,7 @@
 var middleColumnFont = 'Muli';
 var leftColumnFont = 'Reenie Beanie'
 var initDoneFlag = false; // flag representing Notebook initialization status
+var firstTimePositionElementsDoneFlag = false;
 var callbackFunction;
 
 var initDoneFlagSetter = function(initDone) {
@@ -225,6 +226,7 @@ Notebook.prototype.positionElement = function(jqueryObject) {
         var position = objectBox.positionBox(leftColumnPositionedElementsArray, rightColumnPositionedElementsArray, referencedElement);
         if(position == 'left') {
             leftColumnPositionedElementsArray.push(objectBox);
+            jqueryObject = jqueryObject.appendTo('.left-column');
         } else if(position == 'right') {
             rightColumnPositionedElementsArray.push(objectBox);
             jqueryObject = jqueryObject.appendTo('.right-column');
@@ -239,6 +241,8 @@ Notebook.prototype.positionElement = function(jqueryObject) {
             left: objectBox.left
         });
         jqueryObject.css('width', '100%');
+    } else {
+        console.log('undefined referencedElement');
     }
 };
 
@@ -250,17 +254,52 @@ Notebook.prototype.positionElements = function() {
     // position sidenotes
     leftColumnPositionedElementsArray = [];
     rightColumnPositionedElementsArray = [];
+
+    var elementsArray = []
     $('.left-column').find('*').each(function() {
-        Notebook.prototype.positionElement($(this));
+        // Notebook.prototype.positionElement($(this));
+        elementsArray.push($(this));
     });
     $('.right-column').find('*').each(function() {
-        Notebook.prototype.positionElement($(this));
+        // Notebook.prototype.positionElement($(this));
+        elementsArray.push($(this));
     });
+
+    console.log(elementsArray);
+    if(! firstTimePositionElementsDoneFlag) {
+        for (elementIndex in elementsArray) {
+            elementsArray[elementIndex].data('data-id', '' + elementIndex);
+        }
+        firstTimePositionElementsDoneFlag = true;
+    } else {
+        elementsArray = Notebook.prototype.sortElementsById(elementsArray);
+    }
+
+    console.log(elementsArray);
+
+    for(var i=0; i<elementsArray.length; i++) {
+        Notebook.prototype.positionElement(elementsArray[i]);
+    }
 
     if(initDoneFlag) {
         Notebook.prototype.draw();
     }
 };
+
+Notebook.prototype.sortElementsById = function(elementsArray) {
+    // TODO : 
+    // implement a better sorting algorithm
+    var returnElementsArray = [];
+    for(var i=0; i<elementsArray.length; i++) {
+        for(var j=0; j<elementsArray.length; j++) {
+            if(elementsArray[j].data('data-id') == ('' + i)) {
+                returnElementsArray.push(elementsArray[j]);
+                // elementsArray.splice(j, 1);
+                break;
+            }
+        }
+    } return returnElementsArray;
+}
 
 Notebook.prototype.draw = function() {
 

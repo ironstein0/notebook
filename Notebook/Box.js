@@ -154,7 +154,9 @@ Box.prototype.positionBox = function(leftColumnPositionedBoxArray, rightColumnPo
     // TODO : bugfix
     // once the position of a sidenote is assigned to the right column 
     // the element is never positioned to left column again
-    var leftColumnBias = 100;
+    var leftColumnBias = 0;
+    var referencedElementBox = new Box(referencedElement);
+    this.moveTopTo(referencedElementBox.top);
 
     var displacementFromParentNodeWhenInLeftColumn = [0, 0];
     var displacementFromParentNodeWhenInRightColumn = [0, 0];
@@ -178,9 +180,9 @@ Box.prototype.positionBox = function(leftColumnPositionedBoxArray, rightColumnPo
         this.moveLeftTo(this.left + (new Box($('.right-column'))).left);
         return 'right';
     }
-    var referencedElementBox = new Box(referencedElement);
-    var newBox = new Box();
-    newBox.copy(this);
+    // var referencedElementBox = new Box(referencedElement);
+    // var newBox = new Box();
+    // newBox.copy(this);
 
     // var maxDisplacementFromParentNote = 100;
 
