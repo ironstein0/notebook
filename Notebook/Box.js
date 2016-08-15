@@ -154,7 +154,7 @@ Box.prototype.positionBox = function(leftColumnPositionedBoxArray, rightColumnPo
     // TODO : bugfix
     // once the position of a sidenote is assigned to the right column 
     // the element is never positioned to left column again
-    var leftColumnBias = 0;
+    var leftColumnBias = 100;
     var referencedElementBox = new Box(referencedElement);
     this.moveTopTo(referencedElementBox.top);
 
