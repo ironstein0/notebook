@@ -314,6 +314,12 @@ describe('Box.js', function() {
         });
     });
 
-    
+    xdescribe('Box.prototype.positionBox', function() {
+        // TODO : 
+        // figure out how to test Box.prototype.positionBox
+        xit('should work correctly', function() {
+            expect(true).toEqual(true);
+        });
+    });
 
  });

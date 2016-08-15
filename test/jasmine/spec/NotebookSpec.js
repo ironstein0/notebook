@@ -1,3 +1,3 @@
-describe('Notebook', function() {
+describe('Notebook.js', function() {
 
 });

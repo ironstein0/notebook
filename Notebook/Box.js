@@ -3,29 +3,32 @@ var unknownOffset = -9;
 var Box = function(jqueryObject) {
     if(jqueryObject instanceof $) {
         
-        ///////////////////////////////////////////////////////
-        // HOW Jquery's OFFSET METHOD WORKS
-        // source http://javascript.info/tutorial/coordinates
-        ///////////////////////////////////////////////////////
+        /*
+         * HOW JQuery's OFFSET METHOD WORKS
+         * source http://javascript.info/tutorial/coordinates
+         *******************************************************
+         */
 
-        // var boundingRectangle = jqueryObject.get(0).getBoundingClientRect();
+        var boundingRectangle = jqueryObject.get(0).getBoundingClientRect();
 
-        // var body = document.body;
-        // var docElem = document.documentElement;
+        var body = document.body;
+        var docElem = document.documentElement;
         
-        // // calculate page scroll
-        // var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
-        // var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+        // calculate page scroll
+        var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+        var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
 
-        // // the document (html or body) can be shifted from left upper corner in 
-        // // internet explorer. get the shift
-        // var clientTop = docElem.clientTop || body.clientTop || 0;
-        // var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+        // the document (html or body) can be shifted from left upper corner in 
+        // internet explorer. get the shift
+        var clientTop = docElem.clientTop || body.clientTop || 0;
+        var clientLeft = docElem.clientLeft || body.clientLeft || 0;
 
-        // // add scrolls to window-relative coordinates and subtract shift to get
-        // // the cordinates of the element in the whole document
-        // this.top = boundingRectangle.top + scrollTop - clientTop;
-        // this.left = boundingRectangle.left + scrollLeft - clientLeft;
+        // add scrolls to window-relative coordinates and subtract shift to get
+        // the cordinates of the element in the whole document
+        this._top = boundingRectangle.top + scrollTop - clientTop;
+        this._left = boundingRectangle.left + scrollLeft - clientLeft;
+
+        /********************************************************/
         
         var offset = jqueryObject.offset();
         this._top = offset.top + unknownOffset;
@@ -147,14 +150,7 @@ Box.prototype.avoidOverlap = function(box) {
 }
 
 Box.prototype.positionBox = function(leftColumnPositionedBoxArray, rightColumnPositionedBoxArray, referencedElement) {
-    // TODO
-    // change algorithm such that it checks both left and right column positions
-    // before deciding where to position the box
-
-    // TODO : bugfix
-    // once the position of a sidenote is assigned to the right column 
-    // the element is never positioned to left column again
-    var leftColumnBias = 100;
+    var leftColumnBias = 30;
     var referencedElementBox = new Box(referencedElement);
     this.moveTopTo(referencedElementBox.top);
 
@@ -173,42 +169,20 @@ Box.prototype.positionBox = function(leftColumnPositionedBoxArray, rightColumnPo
     if(displacementFromParentNodeWhenInLeftColumn - leftColumnBias <= displacementFromParentNodeWhenInRightColumn) {
         // position in left column
         this.moveTopTo(this.top + displacementFromParentNodeWhenInLeftColumn);
+
+        // if offset.left for left-column is negative, this.moveLeftTo will throw a ValueError
+        try {
+            this.moveLeftTo((new Box($('.left-column'))).left);
+        } catch(err) {
+            this.moveLeftTo(0);
+        }
         return 'left';
     } else {
         // position in right column
         this.moveTopTo(this.top + displacementFromParentNodeWhenInRightColumn);
-        this.moveLeftTo(this.left + (new Box($('.right-column'))).left);
+        this.moveLeftTo((new Box($('.right-column'))).left);
         return 'right';
     }
-    // var referencedElementBox = new Box(referencedElement);
-    // var newBox = new Box();
-    // newBox.copy(this);
-
-    // var maxDisplacementFromParentNote = 100;
-
-    // // position in the left column
-    // if(leftColumnPositionedBoxArray.length != 0) {
-    //     if(newBox.top < leftColumnPositionedBoxArray[leftColumnPositionedBoxArray.length - 1].bottom) {
-    //         newBox.moveTopTo(leftColumnPositionedBoxArray[leftColumnPositionedBoxArray.length - 1].bottom);
-    //     }
-    // }
-
-    // if((newBox.top - referencedElementBox.bottom) > maxDisplacementFromParentNote) {
-    //     // position in the right column 
-    //     newBox.copy(this);
-    //     if(rightColumnPositionedBoxArray.length != 0) {
-    //         if(newBox.top < rightColumnPositionedBoxArray[rightColumnPositionedBoxArray.length - 1].bottom) {
-    //             newBox.moveTopTo(rightColumnPositionedBoxArray[rightColumnPositionedBoxArray.length - 1].bottom);
-    //         }
-    //     }
-    //     newBox.left = newBox.left + (new Box($('.right-column'))).left;
-    //     this.copy(newBox);
-    //     return 'right';
-    // }
-
-    // // keep in the left column
-    // this.copy(newBox);
-    // return 'left';
 }
 
 Box.prototype.toString = function() {

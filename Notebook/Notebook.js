@@ -216,7 +216,7 @@ Notebook.prototype.positionElement = function(jqueryObject) {
         // initialize top same as that of the referenced element
         jqueryObject.offset({
             top: referencedElement.offset().top,
-            left: 20
+            left: jqueryObject.offset().left
         });
 
         // create new box instance corresponding this element
@@ -238,7 +238,7 @@ Notebook.prototype.positionElement = function(jqueryObject) {
         // the objectBox
         jqueryObject.offset({
             top: objectBox.top,
-            left: objectBox.left
+            left: objectBox.left + 10   // padding left
         });
         jqueryObject.css('width', '100%');
     } else {
