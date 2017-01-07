@@ -40,6 +40,14 @@ demo available here : [https://riyanshkarani011235.github.io/](https://riyanshka
         ...
     </html>
         
+4) By default, notebook.js positions sidenotes in either the left or right column by calculating the vertical distance between the sidenote (when placed in a particular column) and the referenced element. You can explicitly select the side by adding another data value in the sidenote element 
+
+    <span data-sidenote="title" data-side="right">Here goes the sidenote corresponding to the title</span>
+    
+5) By default, the referenced element is underlined by notebook.js. If you wish for it to note be underlined, you can add yet another data value in the sidenote element
+
+    <span data-sidenote="title" data-side="right" data-underline="false">Here goes the sidenote corresponding to the title</span>
+        
 4) in your javascript, just run `new Notebook(callback);` and the callback function will be run after everything is initialized. So, somehting like :
 
     $(window).load(function() {
