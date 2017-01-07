@@ -2,7 +2,7 @@
 
 A framework for building websites that resemble a notebook
 
-demo available here : [https://riyanshkarani011235.github.io/pages/notebook/notebook.html](https://riyanshkarani011235.github.io/pages/notebook/notebook.html)
+demo available here : [https://riyanshkarani011235.github.io/](https://riyanshkarani011235.github.io/)
 
 **Usage :**
 
