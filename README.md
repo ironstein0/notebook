@@ -18,8 +18,29 @@ demo available here : [https://riyanshkarani011235.github.io/](https://riyanshka
             </div>
             ...
         </body>
+        ....
+    </html>
         
-3) in your javascript, just run `new Notebook(callback);` and the callback function will be run after everything is initialized. So, somehting like :
+3) For every html element you want to reference, assign an id to that element and then you can easily add a sidenote corresponding to that element using the following
+    
+    <html>
+        ...
+        <body>
+            <div id="content">
+                <!-- all your html goes here -->
+                ...
+                <!-- add an id to the html tag you want to reference in the sidenote -->
+                <p id="title">This is the title</p>
+                <!-- add a span element with data value as data-sidenote="id_of_referenced_tag" -->
+                <span data-sidenote="title">Here goes the sidenote corresponding to the title</span>
+                ...
+            </div>
+            ...
+        </body>
+        ...
+    </html>
+        
+4) in your javascript, just run `new Notebook(callback);` and the callback function will be run after everything is initialized. So, somehting like :
 
     $(window).load(function() {
         var callback = function() {
