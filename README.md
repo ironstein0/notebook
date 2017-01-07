@@ -48,7 +48,7 @@ demo available here : [https://riyanshkarani011235.github.io/](https://riyanshka
 
     <span data-sidenote="title" data-side="right" data-underline="false">Here goes the sidenote corresponding to the title</span>
         
-4) in your javascript, just run `new Notebook(callback);` and the callback function will be run after everything is initialized. So, somehting like :
+6) in your javascript, just run `new Notebook(callback);` and the callback function will be run after everything is initialized. So, somehting like :
 
     $(window).load(function() {
         var callback = function() {
