@@ -150,7 +150,6 @@ Notebook.prototype.init = function() {
 
 	// doing this solves the (first time sidenotes incorrectly displayed) problem
 	setTimeout(this.positionElements, 20);
-
 }
 
 Notebook.prototype.animate = function() {
