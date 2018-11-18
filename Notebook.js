@@ -28,7 +28,7 @@ var Notebook = function(callback) {
     $('script').each(function() {
         var src = $(this).attr('src');
         if((src !== undefined)) {
-            if(src.indexOf('Notebook/Notebook.js') !== -1) {
+            if(src.indexOf('notebook/Notebook.js') !== -1) {
                 // Notebook/Notebook.js is a substring
                 jsFileLocation = src;
             }
