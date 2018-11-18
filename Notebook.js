@@ -358,11 +358,14 @@ Notebook.prototype.underline = function(jqueryObject) {
     var lastBox = new Box();
     $.each(jqueryObject.find('span'), function(index, value) {
         box = new Box($(this));
+        console.log(box);
         if(box.right < lastBox.right) {
             // new line started
             lineArray.push([]);
         }
-        lineArray[lineArray.length - 1].push(box);
+        if (box.top !== box.bottom) {
+            lineArray[lineArray.length - 1].push(box);
+        }
         lastBox = box;
     });
 
@@ -379,9 +382,9 @@ Notebook.prototype.underline = function(jqueryObject) {
 
 var idCount = 0;
 Notebook.prototype.drawLine = function(x1, y1, x2, y2) {
-    var pathStrokeWidth = 4;
+    pathStrokeWidth = 4;
     
-    // calculate with, height, top and left of svg element required
+    // calculate width, height, top and left of svg element required
     if(x1 < x2) {
         var svgLeft = x1;
         var svgWidth = x2 - x1;
@@ -399,7 +402,10 @@ Notebook.prototype.drawLine = function(x1, y1, x2, y2) {
     }
 
     // if height is less than pathStrokeWidth, then set it equal to pathStrokeWidth
-    svgHeight = (svgHeight >= pathStrokeWidth) || pathStrokeWidth;
+    if (svgHeight < pathStrokeWidth) {
+        svgHeight = pathStrokeWidth;
+    }
+    // svgHeight = (svgHeight >= pathStrokeWidth) || pathStrokeWidth;
 
     // create svg
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
